@@ -53,6 +53,7 @@ class EnemyClass:
         if self.y<0:
             self.y=0
         from main import playerObject
+
         if self.x < playerObject.x:
             self.xSpeed =+ 1
         if self.y < playerObject.y:

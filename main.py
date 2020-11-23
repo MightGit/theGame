@@ -16,7 +16,7 @@ from random import randint as rando
 clock = pygame.time.Clock()
 
 gameWindowHeight=800
-gameWindowWidth=600
+gameWindowWidth=1200
 
 terrain=[]
 enemies=[]
@@ -46,8 +46,12 @@ for i in range(16):
     spawnEnemy()
 
 def createTerrain():
-    terrain.append(TerrainClass(screen, 200, 200,200,20))
-    terrain.append(TerrainClass(screen, 400, 200,20,200))
+
+    terrain.append(TerrainClass(screen, 800, 200,20,400))
+    terrain.append(TerrainClass(screen, 400, 200,40,200))
+    terrain.append(TerrainClass(screen, 100, 600,600,20))
+
+
 
 createTerrain()
 
@@ -123,6 +127,7 @@ while not done:
         if enemyIsDead:
             enemies.remove(enemy)
             spawnEnemy()
+            playerObject.points =+ 1
 
     #DRAW GAME OBJECTS:
     screen.fill((0, 0, 0)) #blank screen. (or maybe draw a background)
