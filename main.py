@@ -24,6 +24,9 @@ enemies=[]
 algers=[]
 
 highScore=0
+
+tideDecider = 0
+randomTide = 0
 try:
     with open('highScoreFile') as file:
         data = file.read()
@@ -66,6 +69,9 @@ playerObject = PlayerClass(screen,xpos=100, ypos=100,terrainCollection=terrain)
 
 done = False
 while not done:
+
+#    print(tideDecider)
+    print(randomTide)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
@@ -133,6 +139,21 @@ while not done:
             enemies.remove(enemy)
             spawnEnemy()
 
+        if tideDecider % 100 == 0:
+            randomTide = rando(1,4)
+        if randomTide == 1:
+            for alger in algers:
+                alger.x=+0.0001
+        if randomTide == 2:
+            for alger in algers:
+                alger.x=-0.0001
+        if randomTide == 3:
+            for alger in algers:
+                alger.y=+0.0001
+        if randomTide == 3:
+            for alger in algers:
+                alger.y=-0.0001
+
 
     #DRAW GAME OBJECTS:
     screen.fill((0, 0, 0)) #blank screen. (or maybe draw a background)
@@ -154,9 +175,11 @@ while not done:
     for alger in algers:
         alger.draw()
 
+
+
     pygame.display.flip()
     clock.tick(60)
-
+    tideDecider = tideDecider + 1
 
 #When done is false the while loop above exits, and this code is run:
 with open('highScoreFile', 'w') as file:
