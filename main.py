@@ -8,7 +8,6 @@ pygame.mixer.music.load('VicePoint.mp3') #https://soundcloud.com/synthwave80s/01
 pygame.mixer.music.play(-1)
 
 from Player import PlayerClass
-from Shot import ShotClass
 from Enemy import EnemyClass
 from Terrain import TerrainClass
 from Alger import AlgerClass
@@ -21,7 +20,7 @@ gameWindowWidth=1200
 
 terrain=[]
 enemies=[]
-shots=[]
+
 algers=[]
 
 highScore=0
@@ -86,8 +85,7 @@ while not done:
             if event.key == pygame.K_RIGHT:
                 playerObject.xSpeed += playerObject.maxSpeed
                 #Skud:                          .. Men kun når spilleren bevæger sig:
-            if event.key == pygame.K_SPACE: #and (playerObject.xSpeed !=0 or playerObject.ySpeed !=0):
-                shots.append(ShotClass(screen,spawnPosX=playerObject.x+playerObject.width/2, spawnPosY=playerObject.y+playerObject.height/2, playerSpeedX=playerObject.xSpeed, playerSpeedY=playerObject.ySpeed))
+
         #KEY RELEASES:
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
@@ -106,8 +104,6 @@ while not done:
 
     playerObject.update()
 
-    for shot in shots:
-        shot.update()
 
     for enemy in enemies:
         enemyIsDead = False #boolean to check if enemy is dead, and remove it at end of for loop
@@ -149,8 +145,6 @@ while not done:
     text = font.render('HIGHSCORE: ' + str(highScore), True, (255, 0, 0))
     screen.blit(text, (300,0))
 
-    for shot in shots:
-        shot.draw()
 
     for enemy in enemies:
         enemy.draw()
