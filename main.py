@@ -39,7 +39,7 @@ def collisionChecker(firstGameObject, secondGameObject):
             return True
 
 def spawnEnemy():
-    enemies.append(EnemyClass(screen,spawnPosX=rando(0,gameWindowWidth),spawnPosY=rando(0,gameWindowHeight),speedX=rando(-1,1),speedY=rando(-1,1)))
+    enemies.append(EnemyClass(screen,xpos=rando(0,gameWindowWidth),ypos=rando(0,gameWindowHeight),terrainCollection=terrain))
 
 
 for i in range(16):
@@ -111,7 +111,6 @@ while not done:
                 enemyIsDead=True
                 shots.remove(shot)
                 playerObject.points +=1
-                enemy.playSound()
                 #print('Points:',playerObject.points)
                 if playerObject.points > highScore:
                     highScore = playerObject.points
@@ -119,7 +118,7 @@ while not done:
             playerObject.collisionSFX.play()
             print("OUCH!")
 
-            playerObject.points=0
+        playerObject.points=0
 
         if enemyIsDead:
             enemies.remove(enemy)
