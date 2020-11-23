@@ -11,16 +11,18 @@ from Player import PlayerClass
 from Shot import ShotClass
 from Enemy import EnemyClass
 from Terrain import TerrainClass
+from Alger import AlgerClass
 
 from random import randint as rando
 clock = pygame.time.Clock()
 
 gameWindowHeight=800
-gameWindowWidth=600
+gameWindowWidth=1200
 
 terrain=[]
 enemies=[]
 shots=[]
+algers=[]
 
 highScore=0
 try:
@@ -39,15 +41,23 @@ def collisionChecker(firstGameObject, secondGameObject):
             return True
 
 def spawnEnemy():
-    enemies.append(EnemyClass(screen,spawnPosX=rando(0,gameWindowWidth),spawnPosY=rando(0,gameWindowHeight),speedX=rando(-1,1),speedY=rando(-1,1)))
+    enemies.append(EnemyClass(screen,xpos=rando(0,gameWindowWidth),ypos=rando(0,gameWindowHeight),terrainCollection=terrain))
 
 
-for i in range(16):
+for i in range(10):
     spawnEnemy()
 
 def createTerrain():
-    terrain.append(TerrainClass(screen, 200, 200,200,20))
-    terrain.append(TerrainClass(screen, 400, 200,20,200))
+
+    terrain.append(TerrainClass(screen, 800, 200,20,400))
+    terrain.append(TerrainClass(screen, 400, 200,40,200))
+    terrain.append(TerrainClass(screen, 100, 600,600,20))
+
+def createAlger():
+    algers.append(AlgerClass(screen, _x= rando(0,gameWindowWidth), _y=rando(0,gameWindowHeight),_width=rando(20,75) ,_height=rando(20,75)))
+
+for i in range(6):
+    createAlger()
 
 createTerrain()
 
@@ -106,24 +116,27 @@ while not done:
         if enemy.x>gameWindowWidth or enemy.y>gameWindowHeight or enemy.x<0 or enemy.y<0:
             enemyIsDead=True
 
-        for shot in shots:
-            if collisionChecker(shot,enemy):
+        for alger in algers:
+            if collisionChecker(alger,playerObject):
                 enemyIsDead=True
-                shots.remove(shot)
+                algers.remove(alger)
                 playerObject.points +=1
-                enemy.playSound()
+                createAlger()
+                spawnEnemy()
                 #print('Points:',playerObject.points)
                 if playerObject.points > highScore:
                     highScore = playerObject.points
         if collisionChecker(enemy,playerObject):
             playerObject.collisionSFX.play()
             print("OUCH!")
+            playerObject.points = 0
 
-            playerObject.points=0
+
 
         if enemyIsDead:
             enemies.remove(enemy)
             spawnEnemy()
+
 
     #DRAW GAME OBJECTS:
     screen.fill((0, 0, 0)) #blank screen. (or maybe draw a background)
@@ -144,6 +157,8 @@ while not done:
 
     for tile in terrain:
         tile.draw()
+    for alger in algers:
+        alger.draw()
 
     pygame.display.flip()
     clock.tick(60)
