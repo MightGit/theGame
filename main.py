@@ -114,8 +114,8 @@ while not done:
 
         for alger in algers:
             if collisionChecker(alger,playerObject):
-                enemyIsDead=True
                 algers.remove(alger)
+                playerObject.collisionSFX.play()
                 playerObject.points +=1
                 createAlger()
                 spawnEnemy()
