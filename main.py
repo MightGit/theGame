@@ -26,7 +26,8 @@ algers=[]
 highScore=0
 
 tideDecider = 0
-randomTide = 0
+tideX = 0.0
+tideY = 0.0
 try:
     with open('highScoreFile') as file:
         data = file.read()
@@ -71,7 +72,7 @@ done = False
 while not done:
 
 #    print(tideDecider)
-    print(randomTide)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
@@ -139,20 +140,15 @@ while not done:
             enemies.remove(enemy)
             spawnEnemy()
 
-        if tideDecider % 100 == 0:
-            randomTide = rando(1,4)
-        if randomTide == 1:
-            for alger in algers:
-                alger.x=+0.0001
-        if randomTide == 2:
-            for alger in algers:
-                alger.x=-0.0001
-        if randomTide == 3:
-            for alger in algers:
-                alger.y=+0.0001
-        if randomTide == 3:
-            for alger in algers:
-                alger.y=-0.0001
+        if tideDecider % 400 == 0:
+            tideX = rando(-1,1)
+            tideY = rando(-1,1)
+
+    if tideDecider % 3 == 0:
+        for alger in algers:
+            alger.x = alger.x - tideX
+            alger.y = alger.y - tideY
+
 
 
     #DRAW GAME OBJECTS:
