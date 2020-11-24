@@ -4,7 +4,7 @@ pygame.init()
 pygame.mixer.init(frequency=44100, size=-16, channels=6, buffer=2048)
 font = pygame.font.Font('freesansbold.ttf', 32)
 
-pygame.mixer.music.load('VicePoint.mp3') #https://soundcloud.com/synthwave80s/01-vice-point
+pygame.mixer.music.load('The Little Mermaid.mp3') #https://soundcloud.com/synthwave80s/01-vice-point
 pygame.mixer.music.play(-1)
 
 from Player import PlayerClass
@@ -17,6 +17,7 @@ clock = pygame.time.Clock()
 
 gameWindowHeight=800
 gameWindowWidth=1200
+movementPower = 0
 
 terrain=[]
 enemies=[]
@@ -148,7 +149,14 @@ while not done:
         for alger in algers:
             alger.x = alger.x - tideX
             alger.y = alger.y - tideY
+    if tideDecider % 200 == 0:
+        createAlger()
 
+
+    if playerObject.points==30 and movementPower == 0:
+        playerObject.height= 10
+        playerObject.width= 10
+        movementPower = 1
 
 
     #DRAW GAME OBJECTS:
