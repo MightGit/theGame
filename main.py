@@ -1,5 +1,5 @@
 import pygame
-#testtesttest123
+#testtesttest
 pygame.init()
 pygame.mixer.init(frequency=44100, size=-16, channels=6, buffer=2048)
 font = pygame.font.Font('freesansbold.ttf', 32)
