@@ -131,8 +131,8 @@ while not done:
 
                 powerup = rando(0, 30)
                 if powerup == 14:
-                    playerObject.height+=1
-                    playerObject.width+=1
+                    playerObject.height+=10
+                    playerObject.width+=10
 
                 #print('Points:',playerObject.points)
                 if playerObject.points > highScore:
