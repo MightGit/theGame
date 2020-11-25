@@ -32,6 +32,7 @@ class PlayerClass:
         for tile in self.terrainCollection:
             #if the player is within the x coordinates of a wall tile, and future Y coordinate is inside the wall:
             if self.x + self.width > tile.x and self.x < tile.x + tile.width and self.futureY + self.height > tile.y and self.futureY < tile.y + tile.height:
+
                 yWillCollide=True
             # if the player is within the Y coordinates of a wall tile, and future X coordinate is inside the wall:
             if self.y + self.height > tile.y and self.y < tile.y + tile.height and self.futureX + self.width > tile.x and self.futureX < tile.x + tile.width:

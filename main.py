@@ -45,13 +45,14 @@ def collisionChecker(firstGameObject, secondGameObject):
         if firstGameObject.x + firstGameObject.width > secondGameObject.x and firstGameObject.x < secondGameObject.x + secondGameObject.width and firstGameObject.y + firstGameObject.height > secondGameObject.y and firstGameObject.y < secondGameObject.y + secondGameObject.height:
             return True
 
+playerObject = PlayerClass(screen,xpos=rando(0,gameWindowWidth), ypos=rando(0,gameWindowHeight),terrainCollection=terrain)
+
 def spawnEnemy():
-    enemies.append(EnemyClass(screen,xpos=rando(0,gameWindowWidth),ypos=rando(0,gameWindowHeight),terrainCollection=terrain))
+    enemies.append(EnemyClass(screen,xpos=rando(0,gameWindowWidth),ypos=rando(0,gameWindowHeight),terrainCollection=terrain,player=playerObject))
 
 
 for i in range(15):
     spawnEnemy()
-playerObject = PlayerClass(screen,xpos=rando(0,gameWindowWidth), ypos=rando(0,gameWindowHeight),terrainCollection=terrain)
 
 def createTerrain():
     terrain.append(TerrainClass(screen, rando(-200,gameWindowWidth + 200),rando(-200,gameWindowHeight + 200),rando(10,200),rando(10,200)))
@@ -81,6 +82,7 @@ while not done:
             done = True
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             done = True
+
 
         #-------PLAYER CONTROLS---------
 
@@ -165,9 +167,21 @@ while not done:
         createTerrain()
 
 
-    if playerObject.points==30 and movementPower == 0:
-        playerObject.height= 10
-        playerObject.width= 10
+    if playerObject.points==5 and movementPower == 0:
+
+        playerObject.maxSpeed = 8
+
+        if not (playerObject.ySpeed == 0 and playerObject.xSpeed == 0):
+            if playerObject.xSpeed > 0:
+                playerObject.xSpeed = playerObject.maxSpeed
+            else:
+                playerObject.xSpeed = -1*playerObject.maxSpeed
+            if playerObject.ySpeed > 0:
+                playerObject.ySpeed = playerObject.maxSpeed
+            else:
+                playerObject.ySpeed = -1*playerObject.maxSpeed
+
+
         movementPower = 1
 
 
