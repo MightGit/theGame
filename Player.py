@@ -21,6 +21,17 @@ class PlayerClass:
         self.screenHeight = self.theScreen.get_size()[1]
         self.terrainCollection=terrainCollection
 
+    def changeSpeedTo(self,newSpeed): #changes max speed, and takes current speeed into account
+        self.maxSpeed += newSpeed
+        if self.xSpeed > 0:
+            self.xSpeed = self.maxSpeed
+        elif self.xSpeed < 0:
+            self.xSpeed = (-1)*self.maxSpeed
+        if self.ySpeed > 0:
+            self.ySpeed = self.maxSpeed
+        elif self.ySpeed < 0:
+            self.ySpeed = (-1)*self.maxSpeed
+
     def update(self):
 
         self.futureX=self.x+self.xSpeed
