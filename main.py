@@ -56,9 +56,6 @@ for i in range(15):
 
 def createTerrain():
     terrain.append(TerrainClass(screen, rando(-200,gameWindowWidth + 200),rando(-200,gameWindowHeight + 200),rando(10,200),rando(10,200)))
-    for tile in terrain:
-        if collisionChecker(tile,playerObject):
-            terrain.remove(tile)
 
 def createAlger():
     algers.append(AlgerClass(screen, _x= rando(-100,gameWindowWidth+100), _y=rando(-100,gameWindowHeight+100),_width=rando(20,75) ,_height=rando(20,75)))
