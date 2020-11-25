@@ -131,7 +131,7 @@ while not done:
                 if playerObject.points > highScore:
                     highScore = playerObject.points
         if collisionChecker(enemy,playerObject):
-            playerObject.collisionSFX.play()
+            playerObject.DeathSFX.play()
             print("OUCH!")
             playerObject.points = 0
 

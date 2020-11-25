@@ -10,6 +10,7 @@ class PlayerClass:
     color=(0, 128, 255)
     points=0
     collisionSFX = pygame.mixer.Sound('plingpling.wav')
+    DeathSFX = pygame.mixer.Sound('aaw.wav')
 
 
     def __init__(self,screen,xpos,ypos,terrainCollection):
