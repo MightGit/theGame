@@ -22,7 +22,7 @@ class PlayerClass:
         self.terrainCollection=terrainCollection
 
     def changeSpeedTo(self,newSpeed): #changes max speed, and takes current speeed into account
-        self.maxSpeed = newSpeed
+        self.maxSpeed += newSpeed
         if self.xSpeed > 0:
             self.xSpeed = self.maxSpeed
         elif self.xSpeed < 0:

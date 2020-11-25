@@ -17,7 +17,7 @@ clock = pygame.time.Clock()
 
 gameWindowHeight=800
 gameWindowWidth=1200
-movementPower = 0
+powerUp = 0
 
 terrain=[]
 enemies=[]
@@ -132,6 +132,9 @@ while not done:
                 playerObject.points +=1
                 createAlger()
                 spawnEnemy()
+                powerUp = rando(0,20)
+                if powerUp == 10:
+                    playerObject.changeSpeedTo(3)
                 #print('Points:',playerObject.points)
                 if playerObject.points > highScore:
                     highScore = playerObject.points
@@ -164,11 +167,6 @@ while not done:
         createTerrain()
 
 
-    if playerObject.points==5 and movementPower == 0:
-
-        playerObject.changeSpeedTo(8)
-
-        movementPower = 1
 
 
     #DRAW GAME OBJECTS:
