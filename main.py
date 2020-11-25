@@ -29,6 +29,7 @@ highScore=0
 tideDecider = 0
 tideX = 0.0
 tideY = 0.0
+
 try:
     with open('highScoreFile') as file:
         data = file.read()
@@ -48,12 +49,15 @@ def spawnEnemy():
     enemies.append(EnemyClass(screen,xpos=rando(0,gameWindowWidth),ypos=rando(0,gameWindowHeight),terrainCollection=terrain))
 
 
-for i in range(10):
+for i in range(15):
     spawnEnemy()
+playerObject = PlayerClass(screen,xpos=rando(0,gameWindowWidth), ypos=rando(0,gameWindowHeight),terrainCollection=terrain)
 
 def createTerrain():
-    terrain.append(TerrainClass(screen, rando(-200,gameWindowWidth + 200),rando(-200,gameWindowHeight + 200),rando(10,100),rando(10,100)))
-
+    terrain.append(TerrainClass(screen, rando(-200,gameWindowWidth + 200),rando(-200,gameWindowHeight + 200),rando(10,200),rando(10,200)))
+    for tile in terrain:
+        if collisionChecker(tile,playerObject):
+            terrain.remove(tile)
 
 def createAlger():
     algers.append(AlgerClass(screen, _x= rando(-100,gameWindowWidth+100), _y=rando(-100,gameWindowHeight+100),_width=rando(20,75) ,_height=rando(20,75)))
@@ -61,11 +65,10 @@ def createAlger():
 for i in range(6):
     createAlger()
 
-for i in range(15):
+
+
+for i in range(20):
     createTerrain()
-
-
-playerObject = PlayerClass(screen,xpos=100, ypos=100,terrainCollection=terrain)
 
 
 done = False
@@ -115,9 +118,13 @@ while not done:
     for enemy in enemies:
         enemyIsDead = False #boolean to check if enemy is dead, and remove it at end of for loop
         enemy.update()
+        enemy.enemyDeadTimer()
+        if enemy.enemyTime > 1200:
+            enemyIsDead = True
+
 
         if enemy.x>gameWindowWidth or enemy.y>gameWindowHeight or enemy.x<0 or enemy.y<0:
-            enemyIsDead=True
+            enemies.remove(enemy)
 
         for alger in algers:
             if collisionChecker(alger,playerObject):
@@ -138,11 +145,13 @@ while not done:
 
         if enemyIsDead:
             enemies.remove(enemy)
-            spawnEnemy()
 
-        if tideDecider % 400 == 0:
+
+    if tideDecider % 400 == 0:
             tideX = rando(-1,1)
             tideY = rando(-1,1)
+    if tideDecider % 400 == 0:
+        spawnEnemy()
 
     if tideDecider % 3 == 0:
         for alger in algers:
@@ -164,14 +173,9 @@ while not done:
 
     #DRAW GAME OBJECTS:
     screen.fill((0, 0, 0)) #blank screen. (or maybe draw a background)
-    playerObject.draw()
 
     #Score:                                                 antialias?, color
-    text = font.render('SCORE: ' + str(playerObject.points), True,(0, 255, 0))
-    screen.blit(text,(0,0))
 
-    text = font.render('HIGHSCORE: ' + str(highScore), True, (255, 0, 0))
-    screen.blit(text, (300,0))
 
 
     for enemy in enemies:
@@ -181,8 +185,13 @@ while not done:
         tile.draw()
     for alger in algers:
         alger.draw()
+    playerObject.draw()
 
+    text = font.render('SCORE: ' + str(playerObject.points), True,(0, 255, 0))
+    screen.blit(text,(0,0))
 
+    text = font.render('HIGHSCORE: ' + str(highScore), True, (255, 0, 0))
+    screen.blit(text, (300,0))
 
     pygame.display.flip()
     clock.tick(60)

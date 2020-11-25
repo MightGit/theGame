@@ -11,6 +11,7 @@ class EnemyClass:
     height=20
     color=(255, 128, 255)
     points=0
+    enemyTime = 0
 
 
 
@@ -21,6 +22,9 @@ class EnemyClass:
         self.screenWidth = self.theScreen.get_size()[0] #
         self.screenHeight = self.theScreen.get_size()[1]
         self.terrainCollection=terrainCollection
+
+    def enemyDeadTimer(self):
+        self.enemyTime +=1
 
     def update(self):
 
