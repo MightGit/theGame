@@ -123,13 +123,16 @@ while not done:
 
         for alger in algers:
             if collisionChecker(alger,playerObject):
-                powerup=0
                 algers.remove(alger)
                 playerObject.collisionSFX.play()
                 playerObject.points +=1
                 createAlger()
                 spawnEnemy()
-                if powerup == rando(0, 30)
+
+                powerup = rando(0, 30)
+                if powerup == 14:
+                    playerObject.height+=1
+                    playerObject.width+=1
 
                 #print('Points:',playerObject.points)
                 if playerObject.points > highScore:
@@ -159,7 +162,6 @@ while not done:
     if tideDecider % 200 == 0:
         createAlger()
         createTerrain()
-
 
     if playerObject.points==30 and movementPower == 0:
         playerObject.height= 10

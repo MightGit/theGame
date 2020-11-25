@@ -4,6 +4,7 @@ import pygame
 class AlgerClass:
     color = (114, 222, 116)
 
+    powerup = 0
     def __init__(self, screen, _x, _y, _width, _height):
         self.theScreen = screen
         self.x = _x
