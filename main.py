@@ -166,18 +166,7 @@ while not done:
 
     if playerObject.points==5 and movementPower == 0:
 
-        playerObject.maxSpeed = 8
-
-        if not (playerObject.ySpeed == 0 and playerObject.xSpeed == 0):
-            if playerObject.xSpeed > 0:
-                playerObject.xSpeed = playerObject.maxSpeed
-            else:
-                playerObject.xSpeed = -1*playerObject.maxSpeed
-            if playerObject.ySpeed > 0:
-                playerObject.ySpeed = playerObject.maxSpeed
-            else:
-                playerObject.ySpeed = -1*playerObject.maxSpeed
-
+        playerObject.changeSpeedTo(8)
 
         movementPower = 1
 
