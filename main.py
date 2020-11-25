@@ -4,11 +4,10 @@ pygame.init()
 pygame.mixer.init(frequency=44100, size=-16, channels=6, buffer=2048)
 font = pygame.font.Font('freesansbold.ttf', 32)
 
-pygame.mixer.music.load('VicePoint.mp3') #https://soundcloud.com/synthwave80s/01-vice-point
+pygame.mixer.music.load('The Little Mermaid.mp3') #https://soundcloud.com/synthwave80s/01-vice-point
 pygame.mixer.music.play(-1)
 
 from Player import PlayerClass
-from Shot import ShotClass
 from Enemy import EnemyClass
 from Terrain import TerrainClass
 from Alger import AlgerClass
@@ -18,13 +17,18 @@ clock = pygame.time.Clock()
 
 gameWindowHeight=800
 gameWindowWidth=1200
+movementPower = 0
 
 terrain=[]
 enemies=[]
-shots=[]
+
 algers=[]
 
 highScore=0
+
+tideDecider = 0
+tideX = 0.0
+tideY = 0.0
 try:
     with open('highScoreFile') as file:
         data = file.read()
@@ -67,6 +71,9 @@ playerObject = PlayerClass(screen,xpos=100, ypos=100,terrainCollection=terrain)
 
 done = False
 while not done:
+
+#    print(tideDecider)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
@@ -86,8 +93,7 @@ while not done:
             if event.key == pygame.K_RIGHT:
                 playerObject.xSpeed += playerObject.maxSpeed
                 #Skud:                          .. Men kun når spilleren bevæger sig:
-            if event.key == pygame.K_SPACE: #and (playerObject.xSpeed !=0 or playerObject.ySpeed !=0):
-                shots.append(ShotClass(screen,spawnPosX=playerObject.x+playerObject.width/2, spawnPosY=playerObject.y+playerObject.height/2, playerSpeedX=playerObject.xSpeed, playerSpeedY=playerObject.ySpeed))
+
         #KEY RELEASES:
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
@@ -106,8 +112,6 @@ while not done:
 
     playerObject.update()
 
-    for shot in shots:
-        shot.update()
 
     for enemy in enemies:
         enemyIsDead = False #boolean to check if enemy is dead, and remove it at end of for loop
@@ -118,8 +122,8 @@ while not done:
 
         for alger in algers:
             if collisionChecker(alger,playerObject):
-                enemyIsDead=True
                 algers.remove(alger)
+                playerObject.collisionSFX.play()
                 playerObject.points +=1
                 createAlger()
                 spawnEnemy()
@@ -127,7 +131,7 @@ while not done:
                 if playerObject.points > highScore:
                     highScore = playerObject.points
         if collisionChecker(enemy,playerObject):
-            playerObject.collisionSFX.play()
+            playerObject.DeathSFX.play()
             print("OUCH!")
             playerObject.points = 0
 
@@ -136,6 +140,23 @@ while not done:
         if enemyIsDead:
             enemies.remove(enemy)
             spawnEnemy()
+
+        if tideDecider % 400 == 0:
+            tideX = rando(-1,1)
+            tideY = rando(-1,1)
+
+    if tideDecider % 3 == 0:
+        for alger in algers:
+            alger.x = alger.x - tideX
+            alger.y = alger.y - tideY
+    if tideDecider % 200 == 0:
+        createAlger()
+
+
+    if playerObject.points==30 and movementPower == 0:
+        playerObject.height= 10
+        playerObject.width= 10
+        movementPower = 1
 
 
     #DRAW GAME OBJECTS:
@@ -149,8 +170,6 @@ while not done:
     text = font.render('HIGHSCORE: ' + str(highScore), True, (255, 0, 0))
     screen.blit(text, (300,0))
 
-    for shot in shots:
-        shot.draw()
 
     for enemy in enemies:
         enemy.draw()
@@ -160,9 +179,11 @@ while not done:
     for alger in algers:
         alger.draw()
 
+
+
     pygame.display.flip()
     clock.tick(60)
-
+    tideDecider = tideDecider + 1
 
 #When done is false the while loop above exits, and this code is run:
 with open('highScoreFile', 'w') as file:
