@@ -26,6 +26,8 @@ algers=[]
 
 highScore=0
 
+powerup=0
+
 tideDecider = 0
 tideX = 0.0
 tideY = 0.0
@@ -121,11 +123,14 @@ while not done:
 
         for alger in algers:
             if collisionChecker(alger,playerObject):
+                powerup=0
                 algers.remove(alger)
                 playerObject.collisionSFX.play()
                 playerObject.points +=1
                 createAlger()
                 spawnEnemy()
+                if powerup == rando(0, 30)
+
                 #print('Points:',playerObject.points)
                 if playerObject.points > highScore:
                     highScore = playerObject.points
