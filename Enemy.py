@@ -11,7 +11,7 @@ class EnemyClass:
     height=20
     color=(255, 128, 255)
     points=0
-    collisionSFX = pygame.mixer.Sound('pew.wav')
+
 
 
     def __init__(self,screen,xpos,ypos,terrainCollection):

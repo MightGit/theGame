@@ -52,18 +52,17 @@ for i in range(10):
     spawnEnemy()
 
 def createTerrain():
+    terrain.append(TerrainClass(screen, rando(-200,gameWindowWidth + 200),rando(-200,gameWindowHeight + 200),rando(10,100),rando(10,100)))
 
-    terrain.append(TerrainClass(screen, 800, 200,20,400))
-    terrain.append(TerrainClass(screen, 400, 200,40,200))
-    terrain.append(TerrainClass(screen, 100, 600,600,20))
 
 def createAlger():
-    algers.append(AlgerClass(screen, _x= rando(0,gameWindowWidth), _y=rando(0,gameWindowHeight),_width=rando(20,75) ,_height=rando(20,75)))
+    algers.append(AlgerClass(screen, _x= rando(-100,gameWindowWidth+100), _y=rando(-100,gameWindowHeight+100),_width=rando(20,75) ,_height=rando(20,75)))
 
 for i in range(6):
     createAlger()
 
-createTerrain()
+for i in range(15):
+    createTerrain()
 
 
 playerObject = PlayerClass(screen,xpos=100, ypos=100,terrainCollection=terrain)
@@ -149,8 +148,12 @@ while not done:
         for alger in algers:
             alger.x = alger.x - tideX
             alger.y = alger.y - tideY
+        for tile in terrain:
+            tile.x = tile.x - tideX
+            tile.y = tile.y - tideY
     if tideDecider % 200 == 0:
         createAlger()
+        createTerrain()
 
 
     if playerObject.points==30 and movementPower == 0:
