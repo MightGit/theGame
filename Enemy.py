@@ -15,7 +15,8 @@ class EnemyClass:
 
 
 
-    def __init__(self,screen,xpos,ypos,terrainCollection):
+    def __init__(self,screen,xpos,ypos,terrainCollection,player):
+        self.playerObject=player
         self.x=xpos
         self.y=ypos
         self.theScreen=screen
@@ -56,16 +57,16 @@ class EnemyClass:
             self.x=0
         if self.y<0:
             self.y=0
-        from main import playerObject
+        #from main import playerObject
 
-        if self.x < playerObject.x:
+        if self.x < self.playerObject.x:
             self.xSpeed =+ 1
-        if self.y < playerObject.y:
+        if self.y < self.playerObject.y:
             self.ySpeed =+ 1
 
-        if self.x > playerObject.x:
+        if self.x > self.playerObject.x:
             self.xSpeed =- 1
-        if self.y > playerObject.y:
+        if self.y > self.playerObject.y:
             self.ySpeed =- 1
 
 
