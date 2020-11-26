@@ -54,7 +54,7 @@ def collisionChecker(firstGameObject, secondGameObject):
 playerObject = PlayerClass(screen,xpos=590, ypos=100,terrainCollection=terrain)
 
 def spawnEnemy():
-    enemies.append(EnemyClass(screen,xpos=rando(0,gameWindowWidth),ypos=rando(0,gameWindowHeight),terrainCollection=terrain,player=playerObject))
+    enemies.append(EnemyClass(screen,terrainCollection=terrain,player=playerObject))
 
 
 def spawnFastEnemy():
@@ -229,7 +229,8 @@ while not done:
     screen.fill((0, 0, 20)) #blank screen. (or maybe draw a background)
 
     #Score:                                                 antialias?, color
-
+    for alger in algers:
+        alger.draw()
     for enemy in fastEnemies:
         enemy.draw()
 
@@ -238,8 +239,7 @@ while not done:
 
     for tile in terrain:
         tile.draw()
-    for alger in algers:
-        alger.draw()
+
     playerObject.draw()
     if MenuChecker == 1:
         botton.draw()
