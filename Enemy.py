@@ -71,9 +71,9 @@ class EnemyClass:
         #from main import playerObject
 
         if self.x < self.playerObject.x:
-            self.xSpeed =+ 1
+            self.xSpeed = 1
         if self.y < self.playerObject.y:
-            self.ySpeed =+ 1
+            self.ySpeed = 1
 
         if self.x > self.playerObject.x:
             self.xSpeed =- 1

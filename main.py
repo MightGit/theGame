@@ -1,4 +1,5 @@
 import pygame
+
 #testtesttest123
 pygame.init()
 pygame.mixer.init(frequency=44100, size=-16, channels=6, buffer=2048)
@@ -16,7 +17,6 @@ from MenuBotton import BottonMaker
 
 from random import randint as rando
 clock = pygame.time.Clock()
-
 gameWindowHeight=800
 gameWindowWidth=1200
 powerUp = 0
@@ -96,6 +96,19 @@ while not done:
                 playerObject.xSpeed -= playerObject.maxSpeed
             if event.key == pygame.K_RIGHT:
                 playerObject.xSpeed += playerObject.maxSpeed
+            if event.key == pygame.K_r:
+                MenuChecker = 1
+                startSpawn = 0
+                enemies.clear()
+                algers.clear()
+                terrain.clear()
+                fastEnemies.clear()
+                playerObject.height = 20
+                playerObject.width = 20
+                playerObject.changeSpeedToFixed(5)
+                fastSharkCheck = 0
+                playerObject.x = 590
+                playerObject.y = 100
                 #Skud:                          .. Men kun når spilleren bevæger sig:
 
         #KEY RELEASES:
