@@ -12,6 +12,7 @@ from Enemy import EnemyClass
 from Terrain import TerrainClass
 from Alger import AlgerClass
 from FastEnemy import FastEnemyClass
+from MenuBotton import BottonMaker
 
 from random import randint as rando
 clock = pygame.time.Clock()
@@ -27,6 +28,7 @@ terrain=[]
 enemies=[]
 fastEnemies=[]
 algers=[]
+
 
 highScore=0
 
@@ -49,7 +51,7 @@ def collisionChecker(firstGameObject, secondGameObject):
         if firstGameObject.x + firstGameObject.width > secondGameObject.x and firstGameObject.x < secondGameObject.x + secondGameObject.width and firstGameObject.y + firstGameObject.height > secondGameObject.y and firstGameObject.y < secondGameObject.y + secondGameObject.height:
             return True
 
-playerObject = PlayerClass(screen,xpos=rando(0,gameWindowWidth), ypos=rando(0,gameWindowHeight),terrainCollection=terrain)
+playerObject = PlayerClass(screen,xpos=590, ypos=100,terrainCollection=terrain)
 
 def spawnEnemy():
     enemies.append(EnemyClass(screen,xpos=rando(0,gameWindowWidth),ypos=rando(0,gameWindowHeight),terrainCollection=terrain,player=playerObject))
@@ -66,10 +68,12 @@ def createAlger():
     algers.append(AlgerClass(screen, _x= rando(-100,gameWindowWidth+100), _y=rando(-100,gameWindowHeight+100),_width=rando(20,75) ,_height=rando(20,75)))
 
 
+botton =BottonMaker(screen, 500,350,200,100)
+
 
 done = False
 while not done:
-
+    playerObject.update()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
@@ -80,7 +84,7 @@ while not done:
 
 
 
-        #-------PLAYER CONTROLS---------
+
 
         #KEY PRESSES:
         if event.type == pygame.KEYDOWN:
@@ -104,113 +108,125 @@ while not done:
                 playerObject.xSpeed += playerObject.maxSpeed
             if event.key == pygame.K_RIGHT:
                 playerObject.xSpeed -= playerObject.maxSpeed
-    #debug: print out unused pygame events
-    #else:
-    #        print(event)
-
-    #UPDATE GAME OBJECTS:
-
-        playerObject.update()
-        if event.type == pygame.K_UP:
-            if event.key == pygame.K_P:
-                MenuChecker = 0
-
+    if collisionChecker(botton, playerObject):
+            MenuChecker = 0
     #---------Out of Menu-----------
-        if MenuChecker == 0:
-            if startSpawn == 0:
-                for i in range(6):
-                    createAlger()
+    if MenuChecker == 0 and startSpawn == 0:
+        for i in range(6):
+            createAlger()
 
-                for i in range(10):
-                    createTerrain()
-                for i in range(5):
-                    spawnEnemy()
-                startSpawn = 1
-
-            for enemy in fastEnemies:
-                enemyIsDead = False  # boolean to check if enemy is dead, and remove it at end of for loop
-                enemy.update()
-                enemy.enemyDeadTimer()
-                if enemy.enemyTime > 120000:
-                    enemyIsDead = True
-                if enemy.x > gameWindowWidth or enemy.y > gameWindowHeight or enemy.x < 0 or enemy.y < 0:
-                    enemies.remove(enemy)
-                if collisionChecker(enemy, playerObject):
-                    playerObject.DeathSFX.play()
-                    print("OUCH!")
-                    playerObject.points = 0
-
-                if enemyIsDead:
-                    enemies.remove(enemy)
-
-            for enemy in enemies:
-                enemyIsDead = False #boolean to check if enemy is dead, and remove it at end of for loop
-                enemy.update()
-                enemy.enemyDeadTimer()
-                if enemy.enemyTime > 1200:
-                    enemyIsDead = True
+        for i in range(15):
+            createTerrain()
+        for i in range(5):
+            spawnEnemy()
+        startSpawn = 1
+        tideDecider = 0
 
 
-                if enemy.x>gameWindowWidth or enemy.y>gameWindowHeight or enemy.x<0 or enemy.y<0:
-                    enemies.remove(enemy)
-                if collisionChecker(enemy,playerObject):
-                    playerObject.DeathSFX.play()
-                    print("OUCH!")
-                    playerObject.points = 0
-                    MenuChecker = 1
-                    enemies.clear()
-                    algers.clear()
-                    terrain.clear()
-                    fastEnemies.clear()
+    for enemy in fastEnemies:
+        enemyIsDead = False  # boolean to check if enemy is dead, and remove it at end of for loop
+        enemy.update()
+        enemy.enemyDeadTimer()
+        if enemy.enemyTime > 120000:
+            enemyIsDead = True
+        if enemy.x > gameWindowWidth or enemy.y > gameWindowHeight or enemy.x < 0 or enemy.y < 0:
+            enemies.remove(enemy)
+        if collisionChecker(enemy, playerObject):
+            playerObject.DeathSFX.play()
+            print("OUCH!")
+            playerObject.points = 0
+            playerObject.points = 0
+            MenuChecker = 1
+            startSpawn = 0
+            enemies.clear()
+            algers.clear()
+            terrain.clear()
+            fastEnemies.clear()
+            playerObject.height = 20
+            playerObject.width = 20
+            playerObject.changeSpeedToFixed(5)
+            fastSharkCheck = 0
+            playerObject.x = 590
+            playerObject.y = 100
 
-                if enemyIsDead:
-                    enemies.remove(enemy)
+        if enemyIsDead:
+            enemies.remove(enemy)
 
+    for enemy in enemies:
+        enemyIsDead = False #boolean to check if enemy is dead, and remove it at end of for loop
+        enemy.update()
+        enemy.enemyDeadTimer()
+        if enemy.enemyTime > 1200:
+            enemyIsDead = True
+
+
+        if enemy.x>gameWindowWidth or enemy.y>gameWindowHeight or enemy.x<0 or enemy.y<0:
+            enemies.remove(enemy)
+        if collisionChecker(enemy,playerObject):
+            playerObject.DeathSFX.play()
+            print("OUCH!")
+            playerObject.points = 0
+            MenuChecker = 1
+            startSpawn = 0
+            enemies.clear()
+            algers.clear()
+            terrain.clear()
+            fastEnemies.clear()
+            playerObject.height = 20
+            playerObject.width = 20
+            playerObject.changeSpeedToFixed(5)
+            fastSharkCheck = 0
+            playerObject.x = 590
+            playerObject.y = 100
+
+        if enemyIsDead:
+            enemies.remove(enemy)
+
+    for alger in algers:
+        if collisionChecker(alger,playerObject):
+            algers.remove(alger)
+            playerObject.collisionSFX.play()
+            playerObject.points +=1
+            createAlger()
+            spawnEnemy()
+            powerUp = rando(0, 15)
+            if powerUp == 11 and playerObject.height < 30:
+                playerObject.changeSpeedTo(-1)
+                # print('Points:',playerObject.points)
+                playerObject.height += 5
+                playerObject.width += 5
+            if powerUp == 10 and playerObject.height > 9:
+                playerObject.height -= 5
+                playerObject.width -= 5
+                playerObject.changeSpeedTo(1)
+
+    if MenuChecker == 0:
+        if tideDecider % 400 == 0:
+                tideX = rando(-2,2)
+                tideY = rando(-2,2)
+        if tideDecider % 400 == 0:
+            spawnEnemy()
+
+        if tideDecider % 3 == 0:
             for alger in algers:
-                if collisionChecker(alger,playerObject):
-                    algers.remove(alger)
-                    playerObject.collisionSFX.play()
-                    playerObject.points +=1
-                    createAlger()
-                    spawnEnemy()
-                    powerUp = rando(0, 15)
-                    if powerUp == 11 and playerObject.height < 30:
-                        playerObject.changeSpeedTo(-1)
-                        # print('Points:',playerObject.points)
-                        playerObject.height += 5
-                        playerObject.width += 5
-                    if powerUp == 10 and playerObject.height > 9:
-                        playerObject.height -= 5
-                        playerObject.width -= 5
-                        playerObject.changeSpeedTo(1)
+                alger.x = alger.x - tideX
+                alger.y = alger.y - tideY
+            for tile in terrain:
+                tile.x = tile.x - tideX
+                tile.y = tile.y - tideY
+        if tideDecider % 200 == 0:
+            createAlger()
 
+        if tideDecider % 100 == 0:
+            createTerrain()
 
-            if tideDecider % 400 == 0:
-                    tideX = rando(-2,2)
-                    tideY = rando(-2,2)
-            if tideDecider % 400 == 0:
-                spawnEnemy()
-
-            if tideDecider % 3 == 0:
-                for alger in algers:
-                    alger.x = alger.x - tideX
-                    alger.y = alger.y - tideY
-                for tile in terrain:
-                    tile.x = tile.x - tideX
-                    tile.y = tile.y - tideY
-            if tideDecider % 200 == 0:
-                createAlger()
-
-            if tideDecider % 100 == 0:
-                createTerrain()
-
-            if tideDecider + 1 % 1200 == 0 and fastSharkCheck == 0:
-                for i in range(2):
-                    spawnFastEnemy()
+        if tideDecider > 1200 and fastSharkCheck == 0:
+            for i in range(2):
+                spawnFastEnemy()
                 fastSharkCheck = 1
 
-    #DRAW GAME OBJECTS:
-    screen.fill((0, 0, 0)) #blank screen. (or maybe draw a background)
+        #DRAW GAME OBJECTS:
+    screen.fill((0, 0, 20)) #blank screen. (or maybe draw a background)
 
     #Score:                                                 antialias?, color
 
@@ -225,6 +241,8 @@ while not done:
     for alger in algers:
         alger.draw()
     playerObject.draw()
+    if MenuChecker == 1:
+        botton.draw()
 
     text = font.render('SCORE: ' + str(playerObject.points), True,(0, 255, 0))
     screen.blit(text,(0,0))
@@ -235,7 +253,8 @@ while not done:
     pygame.display.flip()
     clock.tick(60)
     tideDecider = tideDecider + 1
-
+    if playerObject.points > highScore:
+        highScore = playerObject.points
 
 #When done is false the while loop above exits, and this code is run:
 with open('highScoreFile', 'w') as file:
