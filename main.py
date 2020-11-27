@@ -1,4 +1,5 @@
 import pygame
+
 #testtesttest123
 pygame.init()
 pygame.mixer.init(frequency=44100, size=-16, channels=6, buffer=2048)
@@ -16,7 +17,6 @@ from MenuBotton import BottonMaker
 
 from random import randint as rando
 clock = pygame.time.Clock()
-
 gameWindowHeight=800
 gameWindowWidth=1200
 powerUp = 0
@@ -54,7 +54,7 @@ def collisionChecker(firstGameObject, secondGameObject):
 playerObject = PlayerClass(screen,xpos=590, ypos=100,terrainCollection=terrain)
 
 def spawnEnemy():
-    enemies.append(EnemyClass(screen,xpos=rando(0,gameWindowWidth),ypos=rando(0,gameWindowHeight),terrainCollection=terrain,player=playerObject))
+    enemies.append(EnemyClass(screen,terrainCollection=terrain,player=playerObject))
 
 
 def spawnFastEnemy():
@@ -96,6 +96,19 @@ while not done:
                 playerObject.xSpeed -= playerObject.maxSpeed
             if event.key == pygame.K_RIGHT:
                 playerObject.xSpeed += playerObject.maxSpeed
+            if event.key == pygame.K_r:
+                MenuChecker = 1
+                startSpawn = 0
+                enemies.clear()
+                algers.clear()
+                terrain.clear()
+                fastEnemies.clear()
+                playerObject.height = 20
+                playerObject.width = 20
+                playerObject.changeSpeedToFixed(5)
+                fastSharkCheck = 0
+                playerObject.x = 590
+                playerObject.y = 100
                 #Skud:                          .. Men kun når spilleren bevæger sig:
 
         #KEY RELEASES:
@@ -229,7 +242,8 @@ while not done:
     screen.fill((0, 0, 20)) #blank screen. (or maybe draw a background)
 
     #Score:                                                 antialias?, color
-
+    for alger in algers:
+        alger.draw()
     for enemy in fastEnemies:
         enemy.draw()
 
@@ -238,8 +252,7 @@ while not done:
 
     for tile in terrain:
         tile.draw()
-    for alger in algers:
-        alger.draw()
+
     playerObject.draw()
     if MenuChecker == 1:
         botton.draw()
