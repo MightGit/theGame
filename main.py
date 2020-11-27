@@ -13,7 +13,7 @@ from Enemy import EnemyClass
 from Terrain import TerrainClass
 from Alger import AlgerClass
 from FastEnemy import FastEnemyClass
-from MenuBotton import BottonMaker
+from MenuBotton import ButtonMaker
 
 from random import randint as rando
 clock = pygame.time.Clock()
@@ -24,10 +24,10 @@ fastSharkCheck = 0
 MenuChecker = 1
 startSpawn = 0
 
-terrain=[]
-enemies=[]
-fastEnemies=[]
-algers=[]
+terrain = []
+enemies = []
+fastEnemies = []
+algers = []
 
 
 highScore=0
@@ -40,7 +40,7 @@ try:
     with open('highScoreFile') as file:
         data = file.read()
         highScore=int(data.strip())
-        print("Loaded highscore:",highScore)
+        print("Loaded high score:",highScore)
 except:
     print("highScoreFile not found, resetting to 0.")
 
@@ -71,7 +71,7 @@ def createAlger():
     algers.append(AlgerClass(screen, _x= rando(-100,gameWindowWidth+100), _y=rando(-100,gameWindowHeight+100),_width=rando(20,75) ,_height=rando(20,75)))
 
 
-botton =BottonMaker(screen, 500,350,200,100)
+button = ButtonMaker(screen, 500, 350, 200, 100)
 
 
 done = False
@@ -124,7 +124,7 @@ while not done:
                 playerObject.xSpeed += playerObject.maxSpeed
             if event.key == pygame.K_RIGHT:
                 playerObject.xSpeed -= playerObject.maxSpeed
-    if collisionChecker(botton, playerObject):
+    if collisionChecker(button, playerObject):
             MenuChecker = 0
     #---------Out of Menu-----------
     if MenuChecker == 0 and startSpawn == 0:
@@ -150,7 +150,6 @@ while not done:
         if collisionChecker(enemy, playerObject):
             playerObject.DeathSFX.play()
             print("OUCH!")
-            playerObject.points = 0
             playerObject.points = 0
             MenuChecker = 1
             startSpawn = 0
@@ -218,8 +217,8 @@ while not done:
 
     if MenuChecker == 0:
         if tideDecider % 400 == 0:
-                tideX = rando(-2,2)
-                tideY = rando(-2,2)
+                tideX = rando(-2, 2)
+                tideY = rando(-2, 2)
         if tideDecider % 400 == 0:
             spawnEnemy()
 
@@ -258,12 +257,12 @@ while not done:
 
     playerObject.draw()
     if MenuChecker == 1:
-        botton.draw()
+        button.draw()
 
     text = font.render('SCORE: ' + str(playerObject.points), True,(0, 255, 0))
     screen.blit(text,(0,0))
 
-    text = font.render('HIGHSCORE: ' + str(highScore), True, (255, 0, 0))
+    text = font.render('HIGH SCORE: ' + str(highScore), True, (255, 0, 0))
     screen.blit(text, (300,0))
 
     pygame.display.flip()
