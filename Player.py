@@ -7,7 +7,7 @@ class PlayerClass:
     maxSpeed=5
     width=20
     height=20
-    color=(0, 128, 255)
+    color=(225 , 250 , 25)
     points=0
     collisionSFX = pygame.mixer.Sound('PopSound.mp3')
     DeathSFX = pygame.mixer.Sound('DieEffect.mp3')

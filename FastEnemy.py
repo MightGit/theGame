@@ -9,7 +9,8 @@ class FastEnemyClass:
     maxSpeed=5
     width=20
     height=20
-    color=(255, 228, 55)
+    color=(8 , 161 , 152)
+
     points=0
     enemyTime = 0
 
