@@ -55,18 +55,18 @@ def collisionChecker(firstGameObject, secondGameObject):
         if firstGameObject.x + firstGameObject.width > secondGameObject.x and firstGameObject.x < secondGameObject.x + secondGameObject.width and firstGameObject.y + firstGameObject.height > secondGameObject.y and firstGameObject.y < secondGameObject.y + secondGameObject.height:
             return True
 
-playerObject = PlayerClass(screen,xpos=590, ypos=100,terrainCollection=terrain)
+playerObject = PlayerClass(screen, xpos=590, ypos=100, terrainCollection=terrain)
 
 def spawnEnemy():
     enemies.append(EnemyClass(screen, terrainCollection=terrain, player=playerObject))
 
 
 def spawnFastEnemy():
-    fastEnemies.append(FastEnemyClass(screen, terrainCollection=terrain,player=playerObject))
+    fastEnemies.append(FastEnemyClass(screen, terrainCollection=terrain, player=playerObject))
 
 
 def createTerrain():
-    terrain.append(TerrainClass(screen, rando(-200,gameWindowWidth + 200),rando(-200,gameWindowHeight + 200),rando(10,200),rando(10,200)))
+    terrain.append(TerrainClass(screen, rando(-200, gameWindowWidth + 200), rando(-200, gameWindowHeight + 200), rando(10, 200), rando(10, 200)))
     if collisionChecker(playerObject, terrain[-1]):
         terrain.pop()
         createTerrain()
@@ -92,11 +92,11 @@ def restartGame():
     playerObject.y = 100
 
 
-button = ButtonMaker(screen, 500,350,200,100)
+button = ButtonMaker(screen, 500, 350, 200, 100)
 
-Goldfish = Goldfish(screen, 50,250,100,50)
-ClownFish = ClownFish(screen, 50,350,100,50)
-Axolotl = Axolotl(screen, 50,450,100,50)
+Goldfish = Goldfish(screen, 50, 250, 100, 50)
+ClownFish = ClownFish(screen, 50, 350, 100, 50)
+Axolotl = Axolotl(screen, 50, 450, 100, 50)
 
 done = False
 while not done:
@@ -141,11 +141,11 @@ while not done:
     if collisionChecker(button, playerObject):
             MenuChecker = 0
     if MenuChecker == 1 and collisionChecker(playerObject, Goldfish):
-        playerObject.color = 225 , 250 , 25
+        playerObject.color = 225, 250, 25
     if MenuChecker == 1 and collisionChecker(playerObject, ClownFish) and highScore > 919:
-        playerObject.color = 200 , 50, 250
+        playerObject.color = 200, 50, 250
     if MenuChecker == 1 and collisionChecker(playerObject, Axolotl) and highScore > 39:
-        playerObject.color = 250 , 20, 50
+        playerObject.color = 250, 20, 50
 
 
     #---------Out of Menu-----------
@@ -178,16 +178,16 @@ while not done:
             enemies.remove(enemy)
 
     for enemy in enemies:
-        enemyIsDead = False #boolean to check if enemy is dead, and remove it at end of for loop
+        enemyIsDead = False  #boolean to check if enemy is dead, and remove it at end of for loop
         enemy.update()
         enemy.enemyDeadTimer()
         if enemy.enemyTime > 1200:
             enemyIsDead = True
 
 
-        if enemy.x>gameWindowWidth or enemy.y>gameWindowHeight or enemy.x<0 or enemy.y<0:
+        if enemy.x > gameWindowWidth or enemy.y > gameWindowHeight or enemy.x < 0 or enemy.y < 0:
             enemies.remove(enemy)
-        if collisionChecker(enemy,playerObject):
+        if collisionChecker(enemy, playerObject):
             playerObject.DeathSFX.play()
             print("OUCH!")
             restartGame()
@@ -196,14 +196,14 @@ while not done:
             enemies.remove(enemy)
 
     for alger in algae:
-        if collisionChecker(alger,playerObject):
+        if collisionChecker(alger, playerObject):
             algae.remove(alger)
             playerObject.collisionSFX.play()
-            playerObject.points +=1
+            playerObject.points += 1
             createAlger()
             spawnEnemy()
             powerUp = rando(0, 15)
-            if powerUp == 11 and playerObject.height <20:
+            if powerUp == 11 and playerObject.height < 20:
                 playerObject.changeSpeedTo(-1)
                 # print('Points:',playerObject.points)
                 playerObject.height += 5
@@ -215,8 +215,8 @@ while not done:
 
     if MenuChecker == 0:
         if tideDecider % 400 == 0:
-                tideX = rando(-2,2)
-                tideY = rando(-2,2)
+                tideX = rando(-2, 2)
+                tideY = rando(-2, 2)
         if tideDecider % 400 == 0:
             spawnEnemy()
 
@@ -239,7 +239,7 @@ while not done:
                 fastSharkCheck = 1
 
         #DRAW GAME OBJECTS:
-    screen.fill((0, 0, 20)) #blank screen. (or maybe draw a background)
+    screen.fill((0, 0, 20))  #blank screen. (or maybe draw a background)
 
     #Score:                                                 antialias?, color
     for alger in algae:
@@ -257,17 +257,17 @@ while not done:
     if MenuChecker == 1:
         button.draw()
 
-    if MenuChecker ==1 and highScore > 19:
+    if MenuChecker == 1 and highScore > 19:
         Goldfish.draw()
         ClownFish.draw()
         if MenuChecker == 1 and highScore > 39:
             Axolotl.draw()
 
-    text = font.render('SCORE: ' + str(playerObject.points), True,(0, 255, 0))
-    screen.blit(text,(0,0))
+    text = font.render('SCORE: ' + str(playerObject.points), True, (0, 255, 0))
+    screen.blit(text, (0, 0))
 
     text = font.render('HIGH SCORE: ' + str(highScore), True, (255, 0, 0))
-    screen.blit(text, (300,0))
+    screen.blit(text, (300, 0))
 
     pygame.display.flip()
     clock.tick(60)
