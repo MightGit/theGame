@@ -14,14 +14,10 @@ from Enemy import EnemyClass
 from Terrain import TerrainClass
 from Alger import AlgerClass
 from FastEnemy import FastEnemyClass
-<<<<<<< HEAD
-from MenuBotton import ButtonMaker
-=======
 from MenuBotton import BottonMaker
 from CharacterSelecter import Goldfish
 from CharacterSelecter import ClownFish
 from CharacterSelecter import Axolotl
->>>>>>> upstream/master
 
 from random import randint as rando
 clock = pygame.time.Clock()
@@ -32,10 +28,10 @@ fastSharkCheck = 0
 MenuChecker = 1
 startSpawn = 0
 
-terrain = []
-enemies = []
-fastEnemies = []
-algers = []
+terrain=[]
+enemies=[]
+fastEnemies=[]
+algers=[]
 
 
 highScore=0
@@ -48,7 +44,7 @@ try:
     with open('highScoreFile') as file:
         data = file.read()
         highScore=int(data.strip())
-        print("Loaded high score:",highScore)
+        print("Loaded highscore:",highScore)
 except:
     print("highScoreFile not found, resetting to 0.")
 
@@ -66,7 +62,7 @@ def spawnEnemy():
 
 
 def spawnFastEnemy():
-    fastEnemies.append(FastEnemyClass(screen,xpos=rando(0,gameWindowWidth),ypos=rando(0,gameWindowHeight),terrainCollection=terrain,player=playerObject))
+    fastEnemies.append(FastEnemyClass(screen,terrainCollection=terrain,player=playerObject))
 
 
 def createTerrain():
@@ -78,8 +74,25 @@ def createTerrain():
 def createAlger():
     algers.append(AlgerClass(screen, _x= rando(-100,gameWindowWidth+100), _y=rando(-100,gameWindowHeight+100),_width=rando(20,75) ,_height=rando(20,75)))
 
+def restartGame():
+    global MenuChecker
+    MenuChecker = 1
+    global startSpawn
+    startSpawn = 0
+    enemies.clear()
+    algers.clear()
+    terrain.clear()
+    fastEnemies.clear()
+    playerObject.height = 20
+    playerObject.width = 20
+    playerObject.changeSpeedToFixed(5)
+    global fastSharkCheck
+    fastSharkCheck = 0
+    playerObject.x = 590
+    playerObject.y = 100
 
-button = ButtonMaker(screen, 500, 350, 200, 100)
+
+botton =BottonMaker(screen, 500,350,200,100)
 
 Goldfish = Goldfish(screen, 50,250,100,50)
 ClownFish = ClownFish(screen, 50,350,100,50)
@@ -111,18 +124,8 @@ while not done:
             if event.key == pygame.K_RIGHT:
                 playerObject.xSpeed += playerObject.maxSpeed
             if event.key == pygame.K_r:
-                MenuChecker = 1
-                startSpawn = 0
-                enemies.clear()
-                algers.clear()
-                terrain.clear()
-                fastEnemies.clear()
-                playerObject.height = 20
-                playerObject.width = 20
-                playerObject.changeSpeedToFixed(5)
-                fastSharkCheck = 0
-                playerObject.x = 590
-                playerObject.y = 100
+                restartGame()
+
                 #Skud:                          .. Men kun når spilleren bevæger sig:
 
         #KEY RELEASES:
@@ -135,7 +138,7 @@ while not done:
                 playerObject.xSpeed += playerObject.maxSpeed
             if event.key == pygame.K_RIGHT:
                 playerObject.xSpeed -= playerObject.maxSpeed
-    if collisionChecker(button, playerObject):
+    if collisionChecker(botton, playerObject):
             MenuChecker = 0
     if MenuChecker == 1 and collisionChecker(playerObject, Goldfish):
         playerObject.color = 225 , 250 , 25
@@ -169,19 +172,7 @@ while not done:
         if collisionChecker(enemy, playerObject):
             playerObject.DeathSFX.play()
             print("OUCH!")
-            playerObject.points = 0
-            MenuChecker = 1
-            startSpawn = 0
-            enemies.clear()
-            algers.clear()
-            terrain.clear()
-            fastEnemies.clear()
-            playerObject.height = 20
-            playerObject.width = 20
-            playerObject.changeSpeedToFixed(5)
-            fastSharkCheck = 0
-            playerObject.x = 590
-            playerObject.y = 100
+            restartGame()
 
         if enemyIsDead:
             enemies.remove(enemy)
@@ -199,19 +190,7 @@ while not done:
         if collisionChecker(enemy,playerObject):
             playerObject.DeathSFX.play()
             print("OUCH!")
-            playerObject.points = 0
-            MenuChecker = 1
-            startSpawn = 0
-            enemies.clear()
-            algers.clear()
-            terrain.clear()
-            fastEnemies.clear()
-            playerObject.height = 20
-            playerObject.width = 20
-            playerObject.changeSpeedToFixed(5)
-            fastSharkCheck = 0
-            playerObject.x = 590
-            playerObject.y = 100
+            restartGame()
 
         if enemyIsDead:
             enemies.remove(enemy)
@@ -236,8 +215,8 @@ while not done:
 
     if MenuChecker == 0:
         if tideDecider % 400 == 0:
-                tideX = rando(-2, 2)
-                tideY = rando(-2, 2)
+                tideX = rando(-2,2)
+                tideY = rando(-2,2)
         if tideDecider % 400 == 0:
             spawnEnemy()
 
@@ -276,7 +255,7 @@ while not done:
 
     playerObject.draw()
     if MenuChecker == 1:
-        button.draw()
+        botton.draw()
 
     if MenuChecker ==1 and highScore > 19:
         Goldfish.draw()
@@ -287,7 +266,7 @@ while not done:
     text = font.render('SCORE: ' + str(playerObject.points), True,(0, 255, 0))
     screen.blit(text,(0,0))
 
-    text = font.render('HIGH SCORE: ' + str(highScore), True, (255, 0, 0))
+    text = font.render('HIGHSCORE: ' + str(highScore), True, (255, 0, 0))
     screen.blit(text, (300,0))
 
     pygame.display.flip()
