@@ -1,5 +1,5 @@
 import pygame
-
+from random import randint as rando
 
 
 
@@ -16,14 +16,26 @@ class FastEnemyClass:
 
 
 
-    def __init__(self,screen,xpos,ypos,terrainCollection,player):
+    def __init__(self,screen,terrainCollection,player):
         self.playerObject=player
-        self.x=xpos
-        self.y=ypos
+
         self.theScreen=screen
         self.screenWidth = self.theScreen.get_size()[0] #
         self.screenHeight = self.theScreen.get_size()[1]
         self.terrainCollection=terrainCollection
+        self.randomLocation = rando(1, 4)
+        if self.randomLocation == 1:
+            self.x = 0
+            self.y = 0
+        if self.randomLocation == 2:
+            self.x = 1180
+            self.y = 780
+        if self.randomLocation == 3:
+            self.x = 1180
+            self.y = 0
+        if self.randomLocation == 4:
+            self.x = 0
+            self.y = 780
 
     def enemyDeadTimer(self):
         self.enemyTime +=1

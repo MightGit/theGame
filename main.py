@@ -62,7 +62,7 @@ def spawnEnemy():
 
 
 def spawnFastEnemy():
-    fastEnemies.append(FastEnemyClass(screen,xpos=rando(0,gameWindowWidth),ypos=rando(0,gameWindowHeight),terrainCollection=terrain,player=playerObject))
+    fastEnemies.append(FastEnemyClass(screen,terrainCollection=terrain,player=playerObject))
 
 
 def createTerrain():
