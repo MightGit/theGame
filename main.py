@@ -90,6 +90,14 @@ def restartGame():
     fastSharkCheck = 0
     playerObject.x = 590
     playerObject.y = 100
+    playerObject.points=0
+    playerObject.goldfishSize = playerObject.goldfishIMG20
+    playerObject.AxolotlSize = playerObject.AxolotlIMG20
+    playerObject.clownfishSize = playerObject.clownfishIMG20
+
+
+def player(x, y):
+    screen.blit(playerObject.goldfishSize, (x, y))
 
 
 botton =BottonMaker(screen, 500,350,200,100)
@@ -100,6 +108,7 @@ Axolotl = Axolotl(screen, 50,450,100,50)
 
 done = False
 while not done:
+    player(playerObject.x,playerObject.y)
     playerObject.update()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -141,11 +150,11 @@ while not done:
     if collisionChecker(botton, playerObject):
             MenuChecker = 0
     if MenuChecker == 1 and collisionChecker(playerObject, Goldfish):
-        playerObject.color = 225 , 250 , 25
-    if MenuChecker == 1 and collisionChecker(playerObject, ClownFish) and highScore > 919:
-        playerObject.color = 200 , 50, 250
+        playerObject.whatFish = 1
+    if MenuChecker == 1 and collisionChecker(playerObject, ClownFish) and highScore > 19:
+        playerObject.whatFish = 2
     if MenuChecker == 1 and collisionChecker(playerObject, Axolotl) and highScore > 39:
-        playerObject.color = 250 , 20, 50
+        playerObject.whatFish = 3
 
 
     #---------Out of Menu-----------
@@ -202,16 +211,26 @@ while not done:
             playerObject.points +=1
             createAlger()
             spawnEnemy()
-            powerUp = rando(0, 15)
-            if powerUp == 11 and playerObject.height <20:
-                playerObject.changeSpeedTo(-1)
-                # print('Points:',playerObject.points)
-                playerObject.height += 5
-                playerObject.width += 5
-            if powerUp == 10 and playerObject.height > 9:
-                playerObject.height -= 5
-                playerObject.width -= 5
-                playerObject.changeSpeedTo(1)
+            powerUp = rando(0, 4)
+            if powerUp == 1 and playerObject.clownfishSize == playerObject.clownfishIMG10 and playerObject.whatFish == 2:
+                playerObject.changeSpeedTo(-2)
+                playerObject.clownfishSize = playerObject.goldfishIMG20
+            if powerUp == 1 and playerObject.AxolotlSize == playerObject.AxolotlIMG10 and playerObject.whatFish == 3:
+                playerObject.changeSpeedTo(-2)
+                playerObject.AxolotlSize= playerObject.AxolotlIMG20
+            if powerUp == 1 and playerObject.goldfishSize == playerObject.goldfishIMG10 and playerObject.whatFish == 1:
+                playerObject.changeSpeedTo(-2)
+                playerObject.goldfishSize = playerObject.goldfishIMG20
+
+            if powerUp == 2 and playerObject.clownfishSize == playerObject.clownfishIMG20 and playerObject.whatFish == 2:
+                playerObject.changeSpeedTo(2)
+                playerObject.clownfishSize = playerObject.goldfishIMG10
+            if powerUp == 2 and playerObject.AxolotlSize == playerObject.AxolotlIMG20 and playerObject.whatFish == 3:
+                playerObject.changeSpeedTo(2)
+                playerObject.AxolotlSize = playerObject.AxolotlIMG10
+            if powerUp == 2 and playerObject.goldfishSize == playerObject.goldfishIMG20 and playerObject.whatFish == 1:
+                playerObject.changeSpeedTo(2)
+                playerObject.goldfishSize = playerObject.goldfishIMG10
 
     if MenuChecker == 0:
         if tideDecider % 400 == 0:

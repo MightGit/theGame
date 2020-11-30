@@ -16,7 +16,7 @@ class Goldfish:
 
 
 class ClownFish:
-    color=(200 , 50, 250)
+    color=(255, 126, 0)
 
     def __init__(self,screen,x,y,width,height):
         self.theScreen=screen
