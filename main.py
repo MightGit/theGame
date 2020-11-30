@@ -258,7 +258,7 @@ while not done:
         if tideDecider % 100 == 0:
             createTerrain()
 
-        if tideDecider > 1200 and fastSharkCheck == 0:
+        if playerObject.points > 19 and fastSharkCheck == 0:
             for i in range(2):
                 spawnFastEnemy()
                 fastSharkCheck = 1
