@@ -266,7 +266,7 @@ while not done:
     text = font.render('SCORE: ' + str(playerObject.points), True,(0, 255, 0))
     screen.blit(text,(0,0))
 
-    text = font.render('HIGHSCORE: ' + str(highScore), True, (255, 0, 0))
+    text = font.render('HIGH SCORE: ' + str(highScore), True, (255, 0, 0))
     screen.blit(text, (300,0))
 
     pygame.display.flip()
@@ -277,5 +277,5 @@ while not done:
 
 #When done is false the while loop above exits, and this code is run:
 with open('highScoreFile', 'w') as file:
-    print("Saving highscore to file:", highScore)
+    print("Saving high score to file:", highScore)
     file.write(str(highScore))
