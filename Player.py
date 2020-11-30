@@ -5,21 +5,37 @@ class PlayerClass:
     xSpeed=0
     ySpeed=0
     maxSpeed=5
-    width=20
-    height=20
+
     color=(225 , 250 , 25)
     points=0
     collisionSFX = pygame.mixer.Sound('PopSound.mp3')
     DeathSFX = pygame.mixer.Sound('DieEffect.mp3')
+    whatFish = 1
 
 
     def __init__(self,screen,xpos,ypos,terrainCollection):
         self.x=xpos
         self.y=ypos
+        self.goldfishIMG20 = pygame.image.load('Goldfish20x20.png')
+        self.goldfishIMG10 = pygame.image.load('Goldfish10x10.png')
+        self.clownfishIMG20 = pygame.image.load('Clownfish20x20.png')
+        self.clownfishIMG10 = pygame.image.load('Clownfish10x10.png')
+        self.AxolotlIMG20 = pygame.image.load('Axoltl20x20.png')
+        self.AxolotlIMG10 = pygame.image.load('Axoltl_10x10.png')
+
+
+        self.goldfishSize = self.goldfishIMG20
+        self.clownfishSize = self.clownfishIMG20
+        self.AxolotlSize = self.AxolotlIMG20
+
+        self.width = self.goldfishIMG20.get_size()[0]
+        self.height = self.goldfishIMG20.get_size()[1]
         self.theScreen=screen
         self.screenWidth = self.theScreen.get_size()[0] #
         self.screenHeight = self.theScreen.get_size()[1]
         self.terrainCollection=terrainCollection
+
+
 
     def changeSpeedTo(self,newSpeed): #changes max speed, and takes current speeed into account
         self.maxSpeed += newSpeed
@@ -75,4 +91,18 @@ class PlayerClass:
             self.y=0
 
     def draw(self):
-        pygame.draw.rect(self.theScreen, self.color, pygame.Rect(self.x, self.y, self.width, self.height))
+        rotationAngle = 0
+        if self.ySpeed / self.maxSpeed * 180 > 0:
+            rotationAngle += 180
+
+        rotationAngle +=  (-self.xSpeed / self.maxSpeed * 90)
+        if self.whatFish == 1:
+            tempFish = pygame.transform.rotate(self.goldfishSize, rotationAngle)
+        elif self.whatFish == 2:
+            tempFish = pygame.transform.rotate(self.clownfishSize, rotationAngle)
+        elif self.whatFish == 3:
+            tempFish = pygame.transform.rotate(self.AxolotlSize, rotationAngle)
+        else:
+            tempFish = pygame.transform.rotate(self.goldfishSize, rotationAngle)
+
+        self.theScreen.blit(tempFish,(self.x,self.y))
