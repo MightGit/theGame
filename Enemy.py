@@ -63,7 +63,6 @@ class EnemyClass:
         if not yWillCollide:
             self.y = self.futureY
 
-        #safety to prevent overshoot:
         if self.x+self.width > self.screenWidth:
             self.x = self.screenWidth-self.width
         if self.y+self.height > self.screenHeight:
@@ -72,9 +71,6 @@ class EnemyClass:
             self.x=0
         if self.y<0:
             self.y=0
-        #from main import playerObject
-
-
         if self.x < self.playerObject.x:
             self.xSpeed = 1
         if self.y < self.playerObject.y:
