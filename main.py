@@ -74,6 +74,23 @@ def createTerrain():
 def createAlger():
     algers.append(AlgerClass(screen, _x= rando(-100,gameWindowWidth+100), _y=rando(-100,gameWindowHeight+100),_width=rando(20,75) ,_height=rando(20,75)))
 
+def restartGame():
+    global MenuChecker
+    MenuChecker = 1
+    global startSpawn
+    startSpawn = 0
+    enemies.clear()
+    algers.clear()
+    terrain.clear()
+    fastEnemies.clear()
+    playerObject.height = 20
+    playerObject.width = 20
+    playerObject.changeSpeedToFixed(5)
+    global fastSharkCheck
+    fastSharkCheck = 0
+    playerObject.x = 590
+    playerObject.y = 100
+
 
 botton =BottonMaker(screen, 500,350,200,100)
 
@@ -107,18 +124,8 @@ while not done:
             if event.key == pygame.K_RIGHT:
                 playerObject.xSpeed += playerObject.maxSpeed
             if event.key == pygame.K_r:
-                MenuChecker = 1
-                startSpawn = 0
-                enemies.clear()
-                algers.clear()
-                terrain.clear()
-                fastEnemies.clear()
-                playerObject.height = 20
-                playerObject.width = 20
-                playerObject.changeSpeedToFixed(5)
-                fastSharkCheck = 0
-                playerObject.x = 590
-                playerObject.y = 100
+                restartGame()
+
                 #Skud:                          .. Men kun når spilleren bevæger sig:
 
         #KEY RELEASES:
@@ -165,20 +172,7 @@ while not done:
         if collisionChecker(enemy, playerObject):
             playerObject.DeathSFX.play()
             print("OUCH!")
-            playerObject.points = 0
-            playerObject.points = 0
-            MenuChecker = 1
-            startSpawn = 0
-            enemies.clear()
-            algers.clear()
-            terrain.clear()
-            fastEnemies.clear()
-            playerObject.height = 20
-            playerObject.width = 20
-            playerObject.changeSpeedToFixed(5)
-            fastSharkCheck = 0
-            playerObject.x = 590
-            playerObject.y = 100
+            restartGame()
 
         if enemyIsDead:
             enemies.remove(enemy)
@@ -196,19 +190,7 @@ while not done:
         if collisionChecker(enemy,playerObject):
             playerObject.DeathSFX.play()
             print("OUCH!")
-            playerObject.points = 0
-            MenuChecker = 1
-            startSpawn = 0
-            enemies.clear()
-            algers.clear()
-            terrain.clear()
-            fastEnemies.clear()
-            playerObject.height = 20
-            playerObject.width = 20
-            playerObject.changeSpeedToFixed(5)
-            fastSharkCheck = 0
-            playerObject.x = 590
-            playerObject.y = 100
+            restartGame()
 
         if enemyIsDead:
             enemies.remove(enemy)
