@@ -162,7 +162,7 @@ while not done:
         for i in range(6):
             createAlger()
 
-        for i in range(15):
+        for i in range(20):
             createTerrain()
         for i in range(5):
             spawnEnemy()
@@ -213,24 +213,30 @@ while not done:
             spawnEnemy()
             powerUp = rando(0, 4)
             if powerUp == 1 and playerObject.clownfishSize == playerObject.clownfishIMG10 and playerObject.whatFish == 2:
-                playerObject.changeSpeedTo(-2)
-                playerObject.clownfishSize = playerObject.goldfishIMG20
+                playerObject.changeSpeedTo(-1)
+                playerObject.clownfishSize = playerObject.clownfishIMG20
+                playerObject.powerUpSFC.play()
             if powerUp == 1 and playerObject.AxolotlSize == playerObject.AxolotlIMG10 and playerObject.whatFish == 3:
-                playerObject.changeSpeedTo(-2)
+                playerObject.changeSpeedTo(-1)
+                playerObject.powerUpSFC.play()
                 playerObject.AxolotlSize= playerObject.AxolotlIMG20
             if powerUp == 1 and playerObject.goldfishSize == playerObject.goldfishIMG10 and playerObject.whatFish == 1:
-                playerObject.changeSpeedTo(-2)
+                playerObject.changeSpeedTo(-1)
                 playerObject.goldfishSize = playerObject.goldfishIMG20
+                playerObject.powerUpSFC.play()
 
             if powerUp == 2 and playerObject.clownfishSize == playerObject.clownfishIMG20 and playerObject.whatFish == 2:
-                playerObject.changeSpeedTo(2)
-                playerObject.clownfishSize = playerObject.goldfishIMG10
+                playerObject.changeSpeedTo(1)
+                playerObject.clownfishSize = playerObject.clownfishIMG10
+                playerObject.powerUpSFC.play()
             if powerUp == 2 and playerObject.AxolotlSize == playerObject.AxolotlIMG20 and playerObject.whatFish == 3:
-                playerObject.changeSpeedTo(2)
+                playerObject.changeSpeedTo(1)
                 playerObject.AxolotlSize = playerObject.AxolotlIMG10
+                playerObject.powerUpSFC.play()
             if powerUp == 2 and playerObject.goldfishSize == playerObject.goldfishIMG20 and playerObject.whatFish == 1:
-                playerObject.changeSpeedTo(2)
+                playerObject.changeSpeedTo(1)
                 playerObject.goldfishSize = playerObject.goldfishIMG10
+                playerObject.powerUpSFC.play()
 
     if MenuChecker == 0:
         if tideDecider % 400 == 0:

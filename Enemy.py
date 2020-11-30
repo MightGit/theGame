@@ -7,8 +7,7 @@ class EnemyClass:
     xSpeed=0
     ySpeed=0
     maxSpeed=5
-    width=20
-    height=20
+
     color=( 35, 53, 97)
     points=0
     enemyTime = 0
@@ -18,6 +17,10 @@ class EnemyClass:
     def __init__(self,screen,terrainCollection,player):
         self.playerObject=player
         self.theScreen=screen
+
+        self.Shark30 = pygame.image.load('Shark_1_30x30.png')
+        self.width = self.Shark30.get_size()[0]
+        self.height = self.Shark30.get_size()[1]
         self.screenWidth = self.theScreen.get_size()[0] #
         self.screenHeight = self.theScreen.get_size()[1]
         self.terrainCollection=terrainCollection
@@ -39,6 +42,7 @@ class EnemyClass:
         self.enemyTime +=1
 
     def update(self):
+
 
         self.futureX=self.x+self.xSpeed
         self.futureY=self.y+self.ySpeed
@@ -70,6 +74,7 @@ class EnemyClass:
             self.y=0
         #from main import playerObject
 
+
         if self.x < self.playerObject.x:
             self.xSpeed = 1
         if self.y < self.playerObject.y:
@@ -81,5 +86,6 @@ class EnemyClass:
             self.ySpeed =- 1
 
 
+
     def draw(self):
-        pygame.draw.rect(self.theScreen, self.color, pygame.Rect(self.x, self.y, self.width, self.height))
+        self.theScreen.blit(self.Shark30, (self.x, self.y))
