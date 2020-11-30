@@ -1,7 +1,7 @@
 import pygame
 
 
-class BottonMaker:
+class ButtonMaker:
     color=(200 , 50, 50)
 
     def __init__(self,screen,x,y,width,height):
