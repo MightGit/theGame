@@ -1,5 +1,6 @@
 import pygame
 
+
 #testtesttest123
 pygame.init()
 pygame.mixer.init(frequency=44100, size=-16, channels=6, buffer=2048)
@@ -13,7 +14,14 @@ from Enemy import EnemyClass
 from Terrain import TerrainClass
 from Alger import AlgerClass
 from FastEnemy import FastEnemyClass
+<<<<<<< HEAD
 from MenuBotton import ButtonMaker
+=======
+from MenuBotton import BottonMaker
+from CharacterSelecter import Goldfish
+from CharacterSelecter import ClownFish
+from CharacterSelecter import Axolotl
+>>>>>>> upstream/master
 
 from random import randint as rando
 clock = pygame.time.Clock()
@@ -73,6 +81,9 @@ def createAlger():
 
 button = ButtonMaker(screen, 500, 350, 200, 100)
 
+Goldfish = Goldfish(screen, 50,250,100,50)
+ClownFish = ClownFish(screen, 50,350,100,50)
+Axolotl = Axolotl(screen, 50,450,100,50)
 
 done = False
 while not done:
@@ -126,6 +137,14 @@ while not done:
                 playerObject.xSpeed -= playerObject.maxSpeed
     if collisionChecker(button, playerObject):
             MenuChecker = 0
+    if MenuChecker == 1 and collisionChecker(playerObject, Goldfish):
+        playerObject.color = 225 , 250 , 25
+    if MenuChecker == 1 and collisionChecker(playerObject, ClownFish) and highScore > 919:
+        playerObject.color = 200 , 50, 250
+    if MenuChecker == 1 and collisionChecker(playerObject, Axolotl) and highScore > 39:
+        playerObject.color = 250 , 20, 50
+
+
     #---------Out of Menu-----------
     if MenuChecker == 0 and startSpawn == 0:
         for i in range(6):
@@ -258,6 +277,12 @@ while not done:
     playerObject.draw()
     if MenuChecker == 1:
         button.draw()
+
+    if MenuChecker ==1 and highScore > 19:
+        Goldfish.draw()
+        ClownFish.draw()
+        if MenuChecker == 1 and highScore > 39:
+            Axolotl.draw()
 
     text = font.render('SCORE: ' + str(playerObject.points), True,(0, 255, 0))
     screen.blit(text,(0,0))
