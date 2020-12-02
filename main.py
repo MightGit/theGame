@@ -1,14 +1,4 @@
 import pygame
-from Player import PlayerClass  #This is all the imports we do for the game as the other files
-from Enemy import EnemyClass
-from Terrain import TerrainClass
-from Alger import AlgerClass
-from FastEnemy import FastEnemyClass
-from MenuBotton import ButtonMaker
-from CharacterSelecter import Goldfish
-from CharacterSelecter import ClownFish
-from CharacterSelecter import Axolotl
-from random import randint as rando  #This is a Function to make random INT numbers
 
 pygame.init()  #Starting the Music in the game
 pygame.mixer.init(frequency=44100, size=-16, channels=6, buffer=2048)
@@ -16,6 +6,20 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 
 pygame.mixer.music.load('Flowers for Bodysnatchers - Hearken Our Storm.mp3')
 pygame.mixer.music.play(-1)
+
+from Player import PlayerClass  #This is all the imports we do for the game as the other files
+from Enemy import EnemyClass
+from Terrain import TerrainClass
+from Alger import AlgerClass
+from FastEnemy import FastEnemyClass
+from MenuBotton import ButtonMaker
+from MenuBotton import Bagground
+from MenuBotton import GameBagground
+from CharacterSelecter import Goldfish
+from CharacterSelecter import ClownFish
+from CharacterSelecter import Axolotl
+from random import randint as rando  #This is a Function to make random INT numbers
+
 
 clock = pygame.time.Clock()
 gameWindowHeight = 800  #Is the size of the game window
@@ -53,7 +57,7 @@ def collisionChecker(firstGameObject, secondGameObject):
         if firstGameObject.x + firstGameObject.width > secondGameObject.x and firstGameObject.x < secondGameObject.x + secondGameObject.width and firstGameObject.y + firstGameObject.height > secondGameObject.y and firstGameObject.y < secondGameObject.y + secondGameObject.height:
             return True
 #Making of Player character
-playerObject = PlayerClass(screen,xpos=590, ypos=100,terrainCollection=terrain)
+playerObject = PlayerClass(screen,xpos=590, ypos=700,terrainCollection=terrain)
 #Function to spawn sharks
 def spawnEnemy():
     enemies.append(EnemyClass(screen,terrainCollection=terrain,player=playerObject))
@@ -87,7 +91,7 @@ def restartGame():
     global fastSharkCheck
     fastSharkCheck = 0
     playerObject.x = 590
-    playerObject.y = 100
+    playerObject.y = 700
     playerObject.points=0
     playerObject.goldfishSize = playerObject.goldfishIMG20
     playerObject.AxolotlSize = playerObject.AxolotlIMG20
@@ -98,10 +102,12 @@ def player(x, y):
     screen.blit(playerObject.goldfishSize, (x, y))
 
 #The buttons in Menu
-botton =ButtonMaker(screen, 500,350,200,100)
-Goldfish = Goldfish(screen, 50,250,100,50)
-ClownFish = ClownFish(screen, 50,350,100,50)
-Axolotl = Axolotl(screen, 50,450,100,50)
+botton =ButtonMaker(screen, 450,500)
+Goldfish = Goldfish(screen, 50,250)
+ClownFish = ClownFish(screen, 50,350)
+Axolotl = Axolotl(screen, 50,450)
+menuBag = Bagground(screen, 0, 0)
+GameBag = GameBagground(screen, 0, 0)
 #Starting Pygame loop
 done = False
 while not done:
@@ -259,6 +265,10 @@ while not done:
 
         #DRAW GAME OBJECTS:
     screen.fill((0, 0, 20)) #blank screen. (or maybe draw a background)
+    if MenuChecker == 1:
+        menuBag.draw()
+    if MenuChecker == 0:
+        GameBag.draw()
 
    #Drawing all objects
     for alger in algers:
@@ -283,10 +293,10 @@ while not done:
             Axolotl.draw()
 
     text = font.render('SCORE: ' + str(playerObject.points), True,(0, 255, 0))
-    screen.blit(text,(0,0))
+    screen.blit(text,(0,770))
 
     text = font.render('HIGHSCORE: ' + str(highScore), True, (255, 0, 0))
-    screen.blit(text, (300,0))
+    screen.blit(text, (910,770))
 
     pygame.display.flip()
     clock.tick(60)
