@@ -264,25 +264,25 @@ while not done:
                 fastSharkCheck = 1
 
         #DRAW GAME OBJECTS:
-    screen.fill((0, 0, 20)) #blank screen. (or maybe draw a background)
-    if MenuChecker == 1:
-        menuBag.draw()
+    screen.fill((0, 0, 20)) #Først så maler vi skærmen blank
+    if MenuChecker == 1: #Her tjekker vi bare om vi er på hovedemenuen, og sørger for at tegne den rigtige baggrund
+        menuBag.draw() #Baggrunden på menuen
     if MenuChecker == 0:
-        GameBag.draw()
+        GameBag.draw() #Baggrunden når spillet er i gang
 
-   #Drawing all objects
-    for alger in algers:
+   #Her tegner vi alle de objekter vi har i spillet.
+    for alger in algers: #Her bruger vi For, som tager hvert obejkt i listen og tegner dem.
         alger.draw()
-    for enemy in fastEnemies:
+    for enemy in fastEnemies: #Vi har to forskellige hajer som tegnes efter hinanden
         enemy.draw()
 
     for enemy in enemies:
         enemy.draw()
 
-    for tile in terrain:
+    for tile in terrain: #Det her er alt skraldet
         tile.draw()
 
-    playerObject.draw()
+    playerObject.draw() #Vi tegner dem i en bestemt rækkefølge for at sørger for at hajer kan gemme sig i skrald
     if MenuChecker == 1:
         botton.draw()
 
