@@ -10,6 +10,7 @@ class PlayerClass:
     points=0
     collisionSFX = pygame.mixer.Sound('PopSound.mp3')
     DeathSFX = pygame.mixer.Sound('DieEffect.mp3')
+    powerUpSFC = pygame.mixer.Sound('PowerUpSound.mp3')
     whatFish = 1
 
 
@@ -27,9 +28,11 @@ class PlayerClass:
         self.goldfishSize = self.goldfishIMG20
         self.clownfishSize = self.clownfishIMG20
         self.AxolotlSize = self.AxolotlIMG20
+        if self.goldfishSize == self.goldfishIMG20:
+            self.width = self.goldfishIMG20.get_size()[0]
+            self.height = self.goldfishIMG20.get_size()[1]
 
-        self.width = self.goldfishIMG20.get_size()[0]
-        self.height = self.goldfishIMG20.get_size()[1]
+
         self.theScreen=screen
         self.screenWidth = self.theScreen.get_size()[0] #
         self.screenHeight = self.theScreen.get_size()[1]
@@ -59,7 +62,24 @@ class PlayerClass:
             self.ySpeed = (-1)*self.maxSpeed
 
     def update(self):
-
+        if self.goldfishSize == self.goldfishIMG20 and self.whatFish == 1:
+            self.width = self.goldfishIMG20.get_size()[0]
+            self.height = self.goldfishIMG20.get_size()[1]
+        if self.goldfishSize == self.goldfishIMG10 and self.whatFish == 1:
+            self.width = self.goldfishIMG10.get_size()[0]
+            self.height = self.goldfishIMG10.get_size()[1]
+        if self.clownfishIMG20 == self.clownfishIMG20 and self.whatFish == 2:
+            self.width = self.clownfishIMG20.get_size()[0]
+            self.height = self.clownfishIMG20.get_size()[1]
+        if self.clownfishSize == self.clownfishIMG10 and self.whatFish == 2:
+            self.width = self.clownfishIMG10.get_size()[0]
+            self.height = self.clownfishIMG10.get_size()[1]
+        if self.AxolotlSize == self.AxolotlIMG20 and self.whatFish == 3:
+            self.width = self.AxolotlIMG20.get_size()[0]
+            self.height = self.AxolotlIMG20.get_size()[1]
+        if self.AxolotlSize == self.AxolotlIMG10 and self.whatFish == 3 :
+            self.width = self.AxolotlIMG10.get_size()[0]
+            self.height = self.AxolotlIMG10.get_size()[1]
         self.futureX=self.x+self.xSpeed
         self.futureY=self.y+self.ySpeed
 
@@ -93,7 +113,7 @@ class PlayerClass:
     def draw(self):
         rotationAngle = 0
         if self.ySpeed / self.maxSpeed * 180 > 0:
-            rotationAngle += 180
+            rotationAngle = 180
 
         rotationAngle +=  (-self.xSpeed / self.maxSpeed * 90)
         if self.whatFish == 1:

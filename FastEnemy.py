@@ -7,8 +7,7 @@ class FastEnemyClass:
     xSpeed=0
     ySpeed=0
     maxSpeed=5
-    width=20
-    height=20
+
     color=(8 , 161 , 152)
 
     points=0
@@ -18,6 +17,9 @@ class FastEnemyClass:
 
     def __init__(self,screen,terrainCollection,player):
         self.playerObject=player
+        self.Shark30 = pygame.image.load('Fastshark30.png')
+        self.width = self.Shark30.get_size()[0]
+        self.height = self.Shark30.get_size()[1]
 
         self.theScreen=screen
         self.screenWidth = self.theScreen.get_size()[0] #
@@ -84,4 +86,4 @@ class FastEnemyClass:
 
 
     def draw(self):
-        pygame.draw.rect(self.theScreen, self.color, pygame.Rect(self.x, self.y, self.width, self.height))
+        self.theScreen.blit(self.Shark30, (self.x, self.y))
